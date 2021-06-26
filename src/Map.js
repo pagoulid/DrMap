@@ -1,19 +1,49 @@
 import React from "react";
-import { Map, GoogleApiWrapper } from "google-maps-react";
+import { Map, GoogleApiWrapper ,Marker} from "google-maps-react";
+import Data from './doctors.json'
+/*Define style property for Map Component*/ 
+const StyleMap ={
+  width : '100%',
+  height : '100%'
+};
+/*Define style property for Map Component*/ 
+
+/*Parse json file and get Array of info dicts */ 
+const Drdata = Data.results;/**Note : Don't use  JSONparse!!! */
+/*Parse json file and get Array of info dicts */ 
+
+
+
+
+
+/*Parse json file*/ 
 /**For Deployment of Google Maps  */
 export class MapComponent extends React.Component {
+  /**constructor */
+  constructor(props){
+    super(props);
+    this.state ={
+      coordinates : Drdata/**Not coordinates but all feats maybe can be fixed */
+    }
+  }
+  /**constructor */
+  /** mapping of Marker Component childs due to coordinates */
+  MapMarks = () =>{
+    return this.state.coordinates.map((item,index)=>{
+      return <Marker position = {{lat:item.latitude,lng:item.longitude}} /> 
+    })
+  }
   render() {
-    const mapStyles = {
-      width: "100%",
-      height: "100%",
-    };
+    /** Adjust zoom,init_centre props of Map Comp to Athens centre relocetion */
     return (
       <Map
         google={this.props.google}
-        zoom={18}
-        style={mapStyles}
-        initialCenter={{ lat: 9.761927, lng: 79.95244 }}
-      />
+        zoom={12}
+        style={StyleMap}
+        initialCenter={{ lat: 37.983810, lng: 23.727539 }}
+      >
+        {this.MapMarks()}
+      </Map>
     );
   }
 }
@@ -21,3 +51,4 @@ export class MapComponent extends React.Component {
 export default GoogleApiWrapper({ 
   apiKey: "AIzaSyDPFYNJ0vKk-EdEZgnzZ78NKCtyn9Ufyms",
 })(MapComponent);
+
