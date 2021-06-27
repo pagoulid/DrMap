@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useRef} from "react";
 
 import { Map, GoogleApiWrapper ,Marker, InfoWindow} from "google-maps-react";
 import Info from './Info'
@@ -34,6 +34,7 @@ export class MapComponent extends React.Component {
       cordlat: 0.0 ,
       cordlng: 0.0,
       information :{first_name :"",last_name:"",street_address:""},
+      Zoomref :useRef(13)
       
       
       
@@ -61,7 +62,8 @@ handleToggleClose = () => {/**EventHandler for clicking mark info to close */
       ActiveMarker: -1,
       isWinOpen : false,
       cordlat: 0.0 ,
-      cordlng: 0.0
+      cordlng: 0.0,
+      
 
   });
 }
