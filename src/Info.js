@@ -17,15 +17,15 @@ export default class Info extends React.Component{
         })*/
         
 /*Info Component for information of InfoWindow at Map.js line 130 {this.props.value}*/ 
-   
+
     render(){
           
         return(
-            <div><ul>
-                <li>Όνομα :{this.props.value.first_name}</li>
-                <li>Επώνυμο :{this.props.value.last_name}</li> 
-                <li>Διεύθυνση :{this.props.value.street_address}</li>
-                </ul>
+            <div className="Info">
+                <p className ="Name">{this.props.value.first_name} {this.props.value.last_name}</p>
+                <h4 className="Location">{this.props.value.street_address} {this.props.value.city} {this.props.value.country} {this.props.value.zip_code}</h4>
+                <h6 className="Location">{this.props.value.languages}</h6>
+
             
             </div>
         );
