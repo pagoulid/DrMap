@@ -88,13 +88,15 @@ handleToggleClose = () => {/**EventHandler for clicking mark info to close */
 }*/
  _handleZoomChanged() {
   /** Check if current reference is equal to given map zoom */
-  
-  DEFAULT_ZOOM=DEFAULT_ZOOM+1;
+  if(this.state.ActiveMarker === -1){/**If clicks on Marker don't change state of zoom */
+    DEFAULT_ZOOM=DEFAULT_ZOOM+1;
   /*Change curr ref(Zoom In)*/
   
   
-  zoomRef.current = zoomRef.current + 1;
-  this.setState({mapzoom:DEFAULT_ZOOM})
+    zoomRef.current = zoomRef.current + 1;
+    this.setState({mapzoom:DEFAULT_ZOOM})
+  }
+  
   
 }
 
@@ -176,7 +178,7 @@ handleToggleClose = () => {/**EventHandler for clicking mark info to close */
         zoom={this.state.mapzoom}
         style={StyleMap}
         initialCenter={{ lat: GivenID.latitude, lng: GivenID.longitude }}
-        onZoomChanged ={this._handleZoomChanged.bind(this)}
+        onClick ={this._handleZoomChanged.bind(this)}
         
        
         
