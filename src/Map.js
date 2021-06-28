@@ -1,9 +1,10 @@
-import React,{useRef} from "react";
+import React from "react";
 
 import { Map, GoogleApiWrapper ,Marker, InfoWindow} from "google-maps-react";
 import Info from './Info'
 
 import Data from './doctors.json'
+let DEFAULT_ZOOM = 13;
 /*Define style property for Map Component*/ 
 const StyleMap ={
   width : '90%',
@@ -17,15 +18,17 @@ const Drdata = Data.results;/**Note : Don't use  JSONparse!!! */
 /*Parse json file and get Array of info dicts */ 
 
 
+/*const Zoomref = React.createRef();*/
 
 
 
- 
 /**For Deployment of Google Maps  */
 export class MapComponent extends React.Component {
   /**constructor */
   constructor(props){
     super(props);
+    
+    
     this.state ={
       
       coordinates : Drdata,/**Not coordinates but all feats maybe can be fixed */
@@ -34,12 +37,16 @@ export class MapComponent extends React.Component {
       cordlat: 0.0 ,
       cordlng: 0.0,
       information :{first_name :"",last_name:"",street_address:""},
-      Zoomref :useRef(13)
+      mapzoom: DEFAULT_ZOOM,
       
       
       
+      
+       
 
     }
+    this.zoomRef = React.createRef();
+     
     
     
     
@@ -68,6 +75,43 @@ handleToggleClose = () => {/**EventHandler for clicking mark info to close */
   });
 }
 /**Openwindow test */
+
+/*Handle the zoom to  infowindow alignment purposes*/ 
+ /**Createref Test */
+ 
+ 
+  
+/*componentWillUnmount(){
+  let Outerref = ref.current+1;
+  this.setState({Zoomref:Outerref,mapzoom:DEFAULT_ZOOM});
+
+}*/
+ _handleZoomChanged() {
+  /** Check if current reference is equal to given map zoom */
+  
+  DEFAULT_ZOOM=DEFAULT_ZOOM+1;
+  /*Change curr ref(Zoom In)*/
+  
+  
+  this.zoomRef.current = this.zoomRef.current + DEFAULT_ZOOM;
+  this.setState({mapzoom:DEFAULT_ZOOM})
+  
+  
+  
+  
+  
+  
+ 
+}
+
+
+
+
+
+
+
+
+/**Createref Test */
 
 
 
@@ -118,23 +162,28 @@ handleToggleClose = () => {/**EventHandler for clicking mark info to close */
      accesible until changes on  the state of isWinOpen*/
      /**At InfoWindow fixing direction of passed latitude adding a fixed value
       (visualisation of window at top of marker) */
-    return (
+    /* onZoomChanged={this._handleZoomChanged()}*/ 
+      return (
      
       
       <Map
         google={this.props.google}
-        zoom={13}
+        ref={this.zoomRef}
+        zoom={this.state.mapzoom}
         style={StyleMap}
         initialCenter={{ lat: GivenID.latitude, lng: GivenID.longitude }}
+       
         
       >
        {this.MapMarks()}
-       {this.state.isWinOpen && <InfoWindow  visible = {true} onClose ={() =>{return this.handleToggleClose()}} position = {{lat:this.state.cordlat+ LAT_FIXEDVAL,lng:this.state.cordlng - LNG_FIXEDVAL}} ><Info value = {{first_name :this.state.information.first_name,last_name:this.state.information.last_name,street_address:this.state.information.street_address}}/></InfoWindow> }
+       {this.state.isWinOpen && <InfoWindow  visible = {true} onClose ={() =>{return this.handleToggleClose.bind(this)}} position = {{lat:this.state.cordlat+ LAT_FIXEDVAL,lng:this.state.cordlng - LNG_FIXEDVAL}} ><Info value = {{first_name :this.state.information.first_name,last_name:this.state.information.last_name,street_address:this.state.information.street_address}}/></InfoWindow> }
        
       </Map>
     );
+    
   }
 }
+/*this._handleZoomChanged.bind(this) for zoom change*/ 
 /*Succesfull pop up -> Double Click*/
 /**<InfoWindow  onClose ={() =>{return this.handleToggleClose(item.id)}} position = {{lat:item.latitude,lng:item.longitude}} ><div><h1>YEEEEEEEE</h1></div></InfoWindow> */
 /*Generated  API key*/ 
