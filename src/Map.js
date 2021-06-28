@@ -5,6 +5,8 @@ import Info from './Info'
 
 import Data from './doctors.json'
 let DEFAULT_ZOOM = 13;
+let LAT_FIXEDVAL = 0.0055000;/**0.0050000 Initial */
+let LNG_FIXEDVAL = 0.0;
 /*Define style property for Map Component*/ 
 const StyleMap ={
   width : '90%',
@@ -86,15 +88,36 @@ handleToggleClose = () => {/**EventHandler for clicking mark info to close */
   this.setState({Zoomref:Outerref,mapzoom:DEFAULT_ZOOM});
 
 }*/
- _handleZoomChanged() {
+ _handleZoomInChanged() {
   /** Check if current reference is equal to given map zoom */
   if(this.state.ActiveMarker === -1){/**If clicks on Marker don't change state of zoom */
+    
     DEFAULT_ZOOM=DEFAULT_ZOOM+1;
+    /**Adjust location of info window at top of clicked marker on zoom out */
+    LAT_FIXEDVAL = LAT_FIXEDVAL/2.0000000; /**Adjust Fixed Value on Zoom In */
   /*Change curr ref(Zoom In)*/
-  
+   
   
     zoomRef.current = zoomRef.current + 1;
     this.setState({mapzoom:DEFAULT_ZOOM})
+    console.log('Current Zoom State :',this.state.mapzoom,'Current Fixed Value',LAT_FIXEDVAL);
+  }
+  
+  
+}
+
+_handleZoomOutChanged() {
+  /** Check if current reference is equal to given map zoom */
+  if(this.state.ActiveMarker === -1){/**If clicks on Marker don't change state of zoom */
+    DEFAULT_ZOOM=DEFAULT_ZOOM-1;
+    /**Adjust location of info window at top of clicked marker on zoom out */
+    LAT_FIXEDVAL = LAT_FIXEDVAL*2.0000000; /**Adjust Fixed Value on Zoom Out */
+  /*Change curr ref(Zoom In)*/
+  
+  
+    zoomRef.current = zoomRef.current - 1;
+    this.setState({mapzoom:DEFAULT_ZOOM})
+    console.log('Current Zoom State :',this.state.mapzoom,'Current Fixed Value',LAT_FIXEDVAL);
   }
   
   
@@ -156,8 +179,7 @@ handleToggleClose = () => {/**EventHandler for clicking mark info to close */
   render(){
     /**Testing to center the Map due to Map Marker with id = 1 */
     const GivenID =this.IDfinder(1);
-    const LAT_FIXEDVAL = 0.0050000;
-    const LNG_FIXEDVAL = 0.0;
+    
     
     
    
@@ -178,8 +200,8 @@ handleToggleClose = () => {/**EventHandler for clicking mark info to close */
         zoom={this.state.mapzoom}
         style={StyleMap}
         initialCenter={{ lat: GivenID.latitude, lng: GivenID.longitude }}
-        onClick ={this._handleZoomChanged.bind(this)}
-        
+        onClick ={this._handleZoomInChanged.bind(this)}
+        onRightclick ={this._handleZoomOutChanged.bind(this)}
        
         
       >
