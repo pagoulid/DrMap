@@ -18,7 +18,7 @@ const Drdata = Data.results;/**Note : Don't use  JSONparse!!! */
 /*Parse json file and get Array of info dicts */ 
 
 
-/*const Zoomref = React.createRef();*/
+const zoomRef = React.createRef();
 
 
 
@@ -45,7 +45,7 @@ export class MapComponent extends React.Component {
        
 
     }
-    this.zoomRef = React.createRef();
+    /*this.zoomRef = React.createRef();*/
      
     
     
@@ -93,18 +93,22 @@ handleToggleClose = () => {/**EventHandler for clicking mark info to close */
   /*Change curr ref(Zoom In)*/
   
   
-  this.zoomRef.current = this.zoomRef.current + DEFAULT_ZOOM;
+  zoomRef.current = zoomRef.current + 1;
   this.setState({mapzoom:DEFAULT_ZOOM})
   
-  
-  
-  
-  
-  
- 
 }
 
-
+/*_handleOnIdle() {
+  /** Check if current reference is equal to given map zoom */
+  
+  /*DEFAULT_ZOOM=DEFAULT_ZOOM+1;*/
+  /*Change curr ref(Zoom In)*/
+  
+  
+  /*zoomRef.current = zoomRef.current + DEFAULT_ZOOM;*/
+ /* this.setState({mapzoom:DEFAULT_ZOOM})
+  
+}*/
 
 
 
@@ -168,15 +172,17 @@ handleToggleClose = () => {/**EventHandler for clicking mark info to close */
       
       <Map
         google={this.props.google}
-        ref={this.zoomRef}
+        ref={zoomRef}
         zoom={this.state.mapzoom}
         style={StyleMap}
         initialCenter={{ lat: GivenID.latitude, lng: GivenID.longitude }}
+        onZoomChanged ={this._handleZoomChanged.bind(this)}
+        
        
         
       >
        {this.MapMarks()}
-       {this.state.isWinOpen && <InfoWindow  visible = {true} onClose ={() =>{return this.handleToggleClose.bind(this)}} position = {{lat:this.state.cordlat+ LAT_FIXEDVAL,lng:this.state.cordlng - LNG_FIXEDVAL}} ><Info value = {{first_name :this.state.information.first_name,last_name:this.state.information.last_name,street_address:this.state.information.street_address}}/></InfoWindow> }
+       {this.state.isWinOpen && <InfoWindow  visible = {true} onClose ={() =>{return this.handleToggleClose(this)}} position = {{lat:this.state.cordlat+ LAT_FIXEDVAL,lng:this.state.cordlng - LNG_FIXEDVAL}} ><Info value = {{first_name :this.state.information.first_name,last_name:this.state.information.last_name,street_address:this.state.information.street_address}}/></InfoWindow> }
        
       </Map>
     );
