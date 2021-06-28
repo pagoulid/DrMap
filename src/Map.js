@@ -39,7 +39,11 @@ export class MapComponent extends React.Component {
       cordlat: 0.0 ,
       cordlng: 0.0,
       information :{first_name :"",last_name:"",street_address:""},
+
       mapzoom: DEFAULT_ZOOM,
+
+      
+
       
       
       
