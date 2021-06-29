@@ -1,0 +1,19 @@
+.Location{
+    font-size: smaller;
+    text-align:center;
+    padding-right: 8em;
+    margin-bottom: 5em;
+}
+
+.Name{
+    color:red;
+    text-align: center;
+    margin-right: 80em;
+    width: max-content;
+    padding-left: 5em;
+}
+
+.Other{
+    font-size: x-small;
+    text-align: start;
+}

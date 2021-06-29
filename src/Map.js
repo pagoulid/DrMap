@@ -1,12 +1,14 @@
+import './Map.css'
 import React from "react";
-
 import { Map, GoogleApiWrapper ,Marker, InfoWindow} from "google-maps-react";
 import Info from './Info'
-
 import Data from './doctors.json'
+/*Initial Zoom of Map on Load */ 
 let DEFAULT_ZOOM = 13;
-let LAT_FIXEDVAL = 0.0055000;/**0.0050000 Initial */
+/*To adjust infowindow coordinates at top of marker*/ 
+let LAT_FIXEDVAL = 0.0055000;
 let LNG_FIXEDVAL = 0.0;
+
 /*Define style property for Map Component*/ 
 const StyleMap ={
   width : '50%',
@@ -17,27 +19,21 @@ const StyleMap ={
   top: 195
   
 };
-
-const StyleWin ={
-  width : 3000,
-  
-  
-};
-
 /*Define style property for Map Component*/ 
 
-/*Parse json file and get Array of info dicts */ 
-
-const Drdata = Data.results;/**Note : Don't use  JSONparse!!! */
-/*Parse json file and get Array of info dicts */ 
+/**For InfoWindow,maybe useless */
 
 
+/*Parse json file and get Array of info dicts */ /**Note : Don't use  JSONparse!!! */
+const Drdata = Data.results;
+/*Create Reference for handling Zoom In/Out states*/ 
 const zoomRef = React.createRef();
 
 
 
 /**For Deployment of Google Maps  */
 export class MapComponent extends React.Component {
+  
   /**constructor */
   constructor(props){
     super(props);
@@ -72,15 +68,18 @@ export class MapComponent extends React.Component {
     
   }
   /**constructor */
-  /**Openwindow test , when click on marker set id of info and condition to open window*/
+
+
+  /** When click on marker , set  info of marker to be displayed and condition to open window*/
   handleToggleOpen = (mark) => {/** EventHandler  for Mark clicking to open info*/
+    /*Calculate years of experience -> current year - Dr practice start year*/ 
     let today = new Date();
-    let Infodate = mark.practice_start_date.split('-');
+    let Infodate = mark.practice_start_date.split('-');/**practice date -> YY-MM-DD */
     let experience = today.getFullYear() - parseInt(Infodate[0]);
       
      
     
-    console.log(experience);
+    
     this.setState({                 /*Line 62 on MarkMaps mapping*/ 
         ActiveMarker: mark.id,
         isWinOpen : true,
@@ -98,87 +97,78 @@ export class MapComponent extends React.Component {
 }
 
 handleToggleClose = () => {/**EventHandler for clicking mark info to close */
-  this.setState({           /**line 119 on InfoWindow */
+  /**Initiate state back on default */ /**line 119 on InfoWindow */
+  this.setState({           
       ActiveMarker: -1,
       isWinOpen : false,
       cordlat: 0.0 ,
       cordlng: 0.0,
+      information :{first_name :"",last_name:"",
+        street_address:"",city:"",country:"",
+          zip_code:"",languages:"",
+            practice_start_date:"",Work_experience:""}
       
 
   });
 }
-/**Openwindow test */
 
-/*Handle the zoom to  infowindow alignment purposes*/ 
- /**Createref Test */
- 
- 
-  
-/*componentWillUnmount(){
-  let Outerref = ref.current+1;
-  this.setState({Zoomref:Outerref,mapzoom:DEFAULT_ZOOM});
+ _handleZoomInChanged() {/**Event Handler for clicking to zoom-> Left click on any location at Map 
+                            except Markers */
 
-}*/
- _handleZoomInChanged() {
-  /** Check if current reference is equal to given map zoom */
-  if(this.state.ActiveMarker === -1){/**If clicks on Marker don't change state of zoom */
+ 
+  if(this.state.ActiveMarker === -1){/**Clicks on Marker don't change state of zoom */
     
+    
+     /*Update zoom and its curr ref(Zoom In)*/
     DEFAULT_ZOOM=DEFAULT_ZOOM+1;
-    /**Adjust location of info window at top of clicked marker on zoom out */
-    LAT_FIXEDVAL = LAT_FIXEDVAL/2.0000000; /**Adjust Fixed Value on Zoom In */
-  /*Change curr ref(Zoom In)*/
-   
-  
     zoomRef.current = zoomRef.current + 1;
     this.setState({mapzoom:DEFAULT_ZOOM})
-    console.log('Current Zoom State :',this.state.mapzoom,'Current Fixed Value',LAT_FIXEDVAL);
+
+    /**Adjust location of info window at top of clicked marker on zoom in */
+    LAT_FIXEDVAL = LAT_FIXEDVAL/2.0000000; 
+ 
+  
+    /*console.log('Current Zoom State :',this.state.mapzoom,'Current Fixed Value',LAT_FIXEDVAL);*/
   }
   
   
 }
 
-_handleZoomOutChanged() {
-  /** Check if current reference is equal to given map zoom */
+_handleZoomOutChanged() {/**Event Handler for clicking to zoom out-> Right click on any location at Map 
+  except Markers */
+ 
   if(this.state.ActiveMarker === -1){/**If clicks on Marker don't change state of zoom */
+    
+    /*Update zoom and its curr ref(Zoom Out)*/
     DEFAULT_ZOOM=DEFAULT_ZOOM-1;
-    /**Adjust location of info window at top of clicked marker on zoom out */
-    LAT_FIXEDVAL = LAT_FIXEDVAL*2.0000000; /**Adjust Fixed Value on Zoom Out */
-  /*Change curr ref(Zoom In)*/
-  
-  
     zoomRef.current = zoomRef.current - 1;
     this.setState({mapzoom:DEFAULT_ZOOM})
-    console.log('Current Zoom State :',this.state.mapzoom,'Current Fixed Value',LAT_FIXEDVAL);
+
+    /**Adjust location of info window at top of clicked marker on zoom out */
+    LAT_FIXEDVAL = LAT_FIXEDVAL*2.0000000; 
+  
+    /*console.log('Current Zoom State :',this.state.mapzoom,'Current Fixed Value',LAT_FIXEDVAL);*/
   }
   
   
 }
 
-/*_handleOnIdle() {
-  /** Check if current reference is equal to given map zoom */
-  
-  /*DEFAULT_ZOOM=DEFAULT_ZOOM+1;*/
-  /*Change curr ref(Zoom In)*/
-  
-  
-  /*zoomRef.current = zoomRef.current + DEFAULT_ZOOM;*/
- /* this.setState({mapzoom:DEFAULT_ZOOM})
-  
-}*/
 
 
 
 
 
 
-/**Createref Test */
 
 
 
 
-  /** mapping of Marker Component childs due to coordinates */
+
+
+  /** Mapping coordinates to  Marker Component childs  */
   /*Set key for each Marker Component , avoiding warning of unique key prop*/ 
-  /*onClick = {() =>{ console.log("Hi!")}*/ 
+  /**onClick -> when Marker is clicked , trigger handler for open info window(line 75) */
+   
   MapMarks = () =>{
     return this.state.coordinates.map((item,index)=>{
       
@@ -194,9 +184,7 @@ _handleZoomOutChanged() {
 
  
 
-
- 
-  /*Returns the dict object with id = 1 */  
+  /*Returns the dict object with given_id  due to condition*/  
   IDfinder = (given_id) =>{
       
       return this.state.coordinates.find(()=>{
@@ -206,25 +194,24 @@ _handleZoomOutChanged() {
    
   }
   
-  /**Testing to center the Map Marker with id = 1 */
+  
   render(){
-    /**Testing to center the Map due to Map Marker with id = 1 */
+    /** Center the Map due to Map Marker with id = 1 */
     const GivenID =this.IDfinder(1);
-    
-    
-    
-   
-    /** Adjust zoom,init_centre props of Map Comp to Athens centre relocetion */
-    /**Centralization of Map (id=1)*/
-    /**When isWinOpen is True,means that Marker onclick triggered so component InfoWindow is accessible */
-    /**When isWinOpen is False , means that InfoWindow onClose triggered so component InfoWindow is not anymore 
-     accesible until changes on  the state of isWinOpen*/
-     /**At InfoWindow fixing direction of passed latitude adding a fixed value
-      (visualisation of window at top of marker) */
-       /*Get Years of Experience*/ 
-      
-      
+  
+    /** Adjust zoom,init_centre props of Map Comp to Athens centre relocation */
 
+    /**Centralization of Map (id=1)*/
+
+    /**Left/Right click -> Zoom In/Out */
+    /**Fix lat,lng for infowindow adding fixed values to Lat Long */
+   
+    /**Before adding InfoWindow Component check first state of isWinOpen(gets triggered when click on mark)  */ 
+     
+     
+
+       /**Pass information to be displayed at Info child Component */
+      
       return (
       
       <Map
@@ -241,16 +228,24 @@ _handleZoomOutChanged() {
       >
         
         {this.MapMarks()}
-        {this.state.isWinOpen && <InfoWindow style={StyleWin} options= {{maxWidth : 800 }}visible = {true} onClose ={() =>{return this.handleToggleClose(this)}} position = {{lat:this.state.cordlat+ LAT_FIXEDVAL,lng:this.state.cordlng - LNG_FIXEDVAL}} ><Info value = {{first_name :this.state.information.first_name,last_name:this.state.information.last_name,street_address:this.state.information.street_address,city:this.state.information.city,country:this.state.information.country,zip_code:this.state.information.zip_code,languages:this.state.information.languages,Work_experience:this.state.information.Work_experience}}/></InfoWindow> }
+        {this.state.isWinOpen && <InfoWindow class="InfoWindow"  
+          visible = {true} onClose ={() =>{return this.handleToggleClose(this)}} 
+          position = {{lat:this.state.cordlat+ LAT_FIXEDVAL,
+          lng:this.state.cordlng - LNG_FIXEDVAL}} >
+            <Info value = {{first_name :this.state.information.first_name,
+              last_name:this.state.information.last_name,
+              street_address:this.state.information.street_address,
+              city:this.state.information.city,country:this.state.information.country,
+              zip_code:this.state.information.zip_code,
+              languages:this.state.information.languages,
+              Work_experience:this.state.information.Work_experience}}/></InfoWindow> }
         
       </Map>
     );
       
   }
 }
-/*this._handleZoomChanged.bind(this) for zoom change*/ 
-/*Succesfull pop up -> Double Click*/
-/**<InfoWindow  onClose ={() =>{return this.handleToggleClose(item.id)}} position = {{lat:item.latitude,lng:item.longitude}} ><div><h1>YEEEEEEEE</h1></div></InfoWindow> */
+
 /*Generated  API key*/ 
 export default GoogleApiWrapper({ 
   apiKey: "AIzaSyDPFYNJ0vKk-EdEZgnzZ78NKCtyn9Ufyms",
