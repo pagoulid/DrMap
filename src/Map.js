@@ -172,7 +172,7 @@ _handleZoomOutChanged() {/**Event Handler for clicking to zoom out-> Right click
   MapMarks = () =>{
     return this.state.coordinates.map((item,index)=>{
       
-      return <Marker key = {item.id} label={item.id.toString()}  onClick = {() =>{ return this.handleToggleOpen(item)}}
+      return <Marker key = {item.id} label={item.id.toString()}  disableDoubleClick = {true} onClick = {() =>{ return this.handleToggleOpen(item)}}
                 position = {{lat:item.latitude,lng:item.longitude}} > 
                 
                   
@@ -211,18 +211,22 @@ _handleZoomOutChanged() {/**Event Handler for clicking to zoom out-> Right click
      
 
        /**Pass information to be displayed at Info child Component */
+       /**Info Initials --> Tag first_char second char pass initials for Animation inside circle */
       
       return (
       
       <Map
         className = "Mapbox"
+        
         google={this.props.google}
         ref={zoomRef}
+        
         zoom={this.state.mapzoom}
         style={StyleMap}
         initialCenter={{ lat: GivenID.latitude, lng: GivenID.longitude }}
         onClick ={this._handleZoomInChanged.bind(this)}
         onRightclick ={this._handleZoomOutChanged.bind(this)}
+        
        
         
       >
@@ -232,7 +236,7 @@ _handleZoomOutChanged() {/**Event Handler for clicking to zoom out-> Right click
           visible = {true} onClose ={() =>{return this.handleToggleClose(this)}} 
           position = {{lat:this.state.cordlat+ LAT_FIXEDVAL,
           lng:this.state.cordlng - LNG_FIXEDVAL}} >
-            <Info value = {{first_name :this.state.information.first_name,
+            <Info Initials={{F:this.state.information.first_name[0],S:this.state.information.last_name[0]}} value = {{first_name :this.state.information.first_name,
               last_name:this.state.information.last_name,
               street_address:this.state.information.street_address,
               city:this.state.information.city,country:this.state.information.country,
