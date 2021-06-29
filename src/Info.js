@@ -5,27 +5,19 @@ import React from 'react';
 /*Info blocks when a marker is Clicked*/
 export default class Info extends React.Component{
   
-    /*SetInfo = (props) =>{
-        this.setState({value : [{plain_text:"Hello There"}]});
-        return this.props.value
-        
-    } */
-
-   /* InfoRetriever = () =>{
-        return this.state.value.map((plain_text)=>{
-            return <div>{plain_text}</div>
-        })*/
+   
         
 /*Info Component for information of InfoWindow at Map.js line 130 {this.props.value}*/ 
-   
+
     render(){
           
         return(
-            <div><ul>
-                <li>Όνομα :{this.props.value.first_name}</li>
-                <li>Επώνυμο :{this.props.value.last_name}</li> 
-                <li>Διεύθυνση :{this.props.value.street_address}</li>
-                </ul>
+            <div className="Info">
+                 
+                <p className ="Name">{this.props.value.first_name} {this.props.value.last_name}</p>
+                <h4 className="Location">{this.props.value.street_address} {this.props.value.city} {this.props.value.country} {this.props.value.zip_code}</h4>
+                <h6 className="Location">Years of work experience:{this.props.value.Work_experience} , Languages: {this.props.value.languages}</h6>
+
             
             </div>
         );

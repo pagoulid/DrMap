@@ -9,9 +9,21 @@ let LAT_FIXEDVAL = 0.0055000;/**0.0050000 Initial */
 let LNG_FIXEDVAL = 0.0;
 /*Define style property for Map Component*/ 
 const StyleMap ={
-  width : '90%',
-  height : '90%'
+  width : '50%',
+  height : '55%',
+  display:'inline-block',
+  position: 'absolute',
+  left: 650,
+  top: 195
+  
 };
+
+const StyleWin ={
+  width : 3000,
+  
+  
+};
+
 /*Define style property for Map Component*/ 
 
 /*Parse json file and get Array of info dicts */ 
@@ -38,7 +50,8 @@ export class MapComponent extends React.Component {
       isWinOpen: false ,/**If true opens Window,else close */
       cordlat: 0.0 ,
       cordlng: 0.0,
-      information :{first_name :"",last_name:"",street_address:""},
+      information :{first_name :"",last_name:"",street_address:"",city:"",country:""
+                  ,zip_code:"",languages:"",practice_start_date:"",Work_experience:0},
 
       mapzoom: DEFAULT_ZOOM,
 
@@ -51,7 +64,7 @@ export class MapComponent extends React.Component {
        
 
     }
-    /*this.zoomRef = React.createRef();*/
+    
      
     
     
@@ -61,13 +74,27 @@ export class MapComponent extends React.Component {
   /**constructor */
   /**Openwindow test , when click on marker set id of info and condition to open window*/
   handleToggleOpen = (mark) => {/** EventHandler  for Mark clicking to open info*/
+    let today = new Date();
+    let Infodate = mark.practice_start_date.split('-');
+    let experience = today.getFullYear() - parseInt(Infodate[0]);
+      
+     
+    
+    console.log(experience);
     this.setState({                 /*Line 62 on MarkMaps mapping*/ 
         ActiveMarker: mark.id,
         isWinOpen : true,
         cordlat: mark.latitude,
         cordlng: mark.longitude,
-        information :{first_name :mark.first_name,last_name:mark.last_name,street_address:mark.street_address}
+        information :{first_name :mark.first_name,last_name:mark.last_name,
+          street_address:mark.street_address,city:mark.city,country:mark.country,
+            zip_code:mark.zip_code,languages:mark.languages,
+              practice_start_date:mark.practice_start_date,Work_experience:experience}
     });
+    
+    
+    
+    
 }
 
 handleToggleClose = () => {/**EventHandler for clicking mark info to close */
@@ -194,11 +221,14 @@ _handleZoomOutChanged() {
      accesible until changes on  the state of isWinOpen*/
      /**At InfoWindow fixing direction of passed latitude adding a fixed value
       (visualisation of window at top of marker) */
-    /* onZoomChanged={this._handleZoomChanged()}*/ 
+       /*Get Years of Experience*/ 
+      
+      
+
       return (
-     
       
       <Map
+        className = "Mapbox"
         google={this.props.google}
         ref={zoomRef}
         zoom={this.state.mapzoom}
@@ -209,12 +239,13 @@ _handleZoomOutChanged() {
        
         
       >
-       {this.MapMarks()}
-       {this.state.isWinOpen && <InfoWindow  visible = {true} onClose ={() =>{return this.handleToggleClose(this)}} position = {{lat:this.state.cordlat+ LAT_FIXEDVAL,lng:this.state.cordlng - LNG_FIXEDVAL}} ><Info value = {{first_name :this.state.information.first_name,last_name:this.state.information.last_name,street_address:this.state.information.street_address}}/></InfoWindow> }
-       
+        
+        {this.MapMarks()}
+        {this.state.isWinOpen && <InfoWindow style={StyleWin} options= {{maxWidth : 800 }}visible = {true} onClose ={() =>{return this.handleToggleClose(this)}} position = {{lat:this.state.cordlat+ LAT_FIXEDVAL,lng:this.state.cordlng - LNG_FIXEDVAL}} ><Info value = {{first_name :this.state.information.first_name,last_name:this.state.information.last_name,street_address:this.state.information.street_address,city:this.state.information.city,country:this.state.information.country,zip_code:this.state.information.zip_code,languages:this.state.information.languages,Work_experience:this.state.information.Work_experience}}/></InfoWindow> }
+        
       </Map>
     );
-    
+      
   }
 }
 /*this._handleZoomChanged.bind(this) for zoom change*/ 

@@ -2,7 +2,13 @@
   text-align: center;
 }
 
-.App-logo {
+.Mapbox h1{
+  text-align: center;
+  font-style:oblique;
+
+}
+
+/*.App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -35,4 +41,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+}*/
