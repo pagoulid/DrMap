@@ -2,10 +2,31 @@
   text-align: center;
 }
 
-.Mapbox h1{
-  text-align: center;
-  font-style:oblique;
+.MainSection{
+  background-image: url(bckgrnd612.jpg);
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-size: 100% 100%;
+  padding-bottom: 23em;
 
+}
+
+.MainSection h1{
+  text-align: center;
+  font-style: oblique;
+}
+
+footer{
+  background-color : grey;
+  padding-bottom:5.7em
+}
+
+
+.Logo{
+  width:10%;
+  height:10%;
+  position: relative;
+  top:-3em;
 }
 
 /*.App-logo {

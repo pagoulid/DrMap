@@ -2,9 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
+import MapComponent from "./Map";
 import reportWebVitals from "./reportWebVitals";
-
-ReactDOM.render(<App />, document.getElementById("root"));
+/*MapComponent for Map*/ 
+/**App for main Page */
+ReactDOM.render( <div>
+    <MapComponent></MapComponent>
+    <App/>
+</div>, document.getElementById("root"));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
