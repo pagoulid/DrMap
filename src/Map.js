@@ -13,10 +13,10 @@ let LNG_FIXEDVAL = 0.0;
 const StyleMap ={
   width : '50%',
   height : '55%',
-  display:'inline-block',
-  position: 'absolute',
-  left: 650,
-  top: 195
+  display:'block',
+  position: 'relative',
+  left: 630,
+  top: 196
   
 };
 /*Define style property for Map Component*/ 
@@ -214,42 +214,44 @@ _handleZoomOutChanged() {/**Event Handler for clicking to zoom out-> Right click
        /**Info Initials --> Tag first_char second char pass initials for Animation inside circle */
       
       return (
-      
-      <Map
-        className = "Mapbox"
         
-        google={this.props.google}
-        ref={zoomRef}
+          <Map className = "Mapbox"
+             
+            
+            google={this.props.google}
+            ref={zoomRef}
+            
+            zoom={this.state.mapzoom}
+            style={StyleMap}
+            initialCenter={{ lat: GivenID.latitude, lng: GivenID.longitude }}
+            onClick ={this._handleZoomInChanged.bind(this)}
+            onRightclick ={this._handleZoomOutChanged.bind(this)}
+            
+          
+            
+          >
+          {this.MapMarks()}
+            {this.state.isWinOpen && <InfoWindow class="InfoWindow"  
+              visible = {true} onClose ={() =>{return this.handleToggleClose(this)}} 
+              position = {{lat:this.state.cordlat+ LAT_FIXEDVAL,
+              lng:this.state.cordlng - LNG_FIXEDVAL}} >
+                <Info  Initials={{F:this.state.information.first_name[0],S:this.state.information.last_name[0]}}value = {{first_name :this.state.information.first_name,
+                  last_name:this.state.information.last_name,
+                  street_address:this.state.information.street_address,
+                  city:this.state.information.city,country:this.state.information.country,
+                  zip_code:this.state.information.zip_code,
+                  languages:this.state.information.languages,
+                  Work_experience:this.state.information.Work_experience}}/></InfoWindow> } 
+          
+            
+          </Map>
         
-        zoom={this.state.mapzoom}
-        style={StyleMap}
-        initialCenter={{ lat: GivenID.latitude, lng: GivenID.longitude }}
-        onClick ={this._handleZoomInChanged.bind(this)}
-        onRightclick ={this._handleZoomOutChanged.bind(this)}
         
-       
-        
-      >
-        
-        {this.MapMarks()}
-        {this.state.isWinOpen && <InfoWindow class="InfoWindow"  
-          visible = {true} onClose ={() =>{return this.handleToggleClose(this)}} 
-          position = {{lat:this.state.cordlat+ LAT_FIXEDVAL,
-          lng:this.state.cordlng - LNG_FIXEDVAL}} >
-            <Info Initials={{F:this.state.information.first_name[0],S:this.state.information.last_name[0]}} value = {{first_name :this.state.information.first_name,
-              last_name:this.state.information.last_name,
-              street_address:this.state.information.street_address,
-              city:this.state.information.city,country:this.state.information.country,
-              zip_code:this.state.information.zip_code,
-              languages:this.state.information.languages,
-              Work_experience:this.state.information.Work_experience}}/></InfoWindow> }
-        
-      </Map>
     );
       
   }
 }
-
+/**  */
 /*Generated  API key*/ 
 export default GoogleApiWrapper({ 
   apiKey: "AIzaSyDPFYNJ0vKk-EdEZgnzZ78NKCtyn9Ufyms",
