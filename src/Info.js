@@ -8,6 +8,9 @@ export default class Info extends React.Component{
    
         
 /*Info Component for information of InfoWindow at Map.js line 130 {this.props.value}*/ 
+  
+
+   
 
     render(){
           
