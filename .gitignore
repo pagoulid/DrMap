@@ -4,6 +4,7 @@ node_modules.zip
 package.zip
 # currently ignored files(For testing purposes)
 Mark.js
+testing.js
 # dependencies
 /node_modules
 /.pnp

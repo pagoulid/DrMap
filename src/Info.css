@@ -3,6 +3,8 @@
     text-align:center;
     padding-right: 8em;
     margin-bottom: 5em;
+    position:relative;
+    top:-14em;
 }
 
 .Name{
@@ -11,9 +13,14 @@
     margin-right: 80em;
     width: max-content;
     padding-left: 5em;
+    position:relative;
+    top:-12em;
 }
 
 .Other{
     font-size: x-small;
     text-align: start;
+    position:relative;
+    top:-15em;
 }
+/*Had to move content to top to align with Circle*/
