@@ -34,7 +34,7 @@ Info:
         Added custom zoom in/out(Left click/Right click on map) 
         
                     NOTE : To display information click marker to select,then click again
-                    NOTE : It is preferable to use the custom implementation of zoom , and not the zoom buttons provided by Google , 
+                    NOTE : It is preferable to use the custom implementation of zoom , and not the zoom buttons provided by Google API , 
                             to avoid bugs with the display
         
     
