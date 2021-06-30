@@ -1,16 +1,18 @@
 DrMap React Application:
 
 Description:
-  Location visualisation of available Dr.Button doctors on a map,providing further information for each.
+
+    Location visualisation of available Dr.Button doctors on a map,providing further information for each.
   
 Info:
-  -Using npm@17.0.2 for the application
+
+    -Using npm@17.0.2 for the application
   
-  -Main files on src/ directory
+    -Main files on src/ directory
   
-  -Implemented 'google-maps-react' library for Google Maps deployment 
-    (For installation : sudo npm install  --legacy-peer-deps  --save  google-maps-react)
-    (Without --legacy-peer-deps  had some issues with npm version)
+    -Implemented 'google-maps-react' library for Google Maps deployment 
+      (For installation : sudo npm install  --legacy-peer-deps  --save  google-maps-react)
+      (Without --legacy-peer-deps  had some issues with npm version)
     
     
   Git Control:
@@ -25,5 +27,14 @@ Info:
         Comparing changes on test with current content on master through pull request
         
         On completion  of each implementation test content was merged with master content by master
+        
+    
+  Files:
+  
+        Map.js,Map.css : Google Maps  Deployment
+        App.js,App.css : Main page implementation
+        Info.js,Info.css : Passing information about a doctor to display them on Map
+        Tag.js,Tag.css : Animation circle implemantation to info display on Map(NOTE : Styling is not fixed well)
+        
         
         
