@@ -47,7 +47,7 @@ export class MapComponent extends React.Component {
       cordlat: 0.0 ,
       cordlng: 0.0,
       information :{first_name :"",last_name:"",street_address:"",city:"",country:""
-                  ,zip_code:"",languages:"",practice_start_date:"",Work_experience:0},
+                  ,zip_code:"",languages:"",date_of_birth:"",practice_start_date:"",Work_experience:0,Age:0},
 
       mapzoom: DEFAULT_ZOOM,
 
@@ -75,7 +75,9 @@ export class MapComponent extends React.Component {
     /*Calculate years of experience -> current year - Dr practice start year*/ 
     let today = new Date();
     let Infodate = mark.practice_start_date.split('-');/**practice date -> YY-MM-DD */
+    let Infoage = mark.date_of_birth.split('-');
     let experience = today.getFullYear() - parseInt(Infodate[0]);
+    let age = today.getFullYear() - parseInt(Infoage[0]);
       
      
     
@@ -88,7 +90,7 @@ export class MapComponent extends React.Component {
         information :{first_name :mark.first_name,last_name:mark.last_name,
           street_address:mark.street_address,city:mark.city,country:mark.country,
             zip_code:mark.zip_code,languages:mark.languages,
-              practice_start_date:mark.practice_start_date,Work_experience:experience}
+              date_of_birth:mark.date_of_birth,practice_start_date:mark.practice_start_date,Work_experience:experience,Age:age}
     });
     
     
@@ -106,7 +108,7 @@ handleToggleClose = () => {/**EventHandler for clicking mark info to close */
       information :{first_name :"",last_name:"",
         street_address:"",city:"",country:"",
           zip_code:"",languages:"",
-            practice_start_date:"",Work_experience:""}
+          date_of_birth:"",practice_start_date:"",Work_experience:""}
       
 
   });
@@ -172,7 +174,7 @@ _handleZoomOutChanged() {/**Event Handler for clicking to zoom out-> Right click
   MapMarks = () =>{
     return this.state.coordinates.map((item,index)=>{
       
-      return <Marker key = {item.id} label={item.id.toString()}  disableDoubleClick = {true} onClick = {() =>{ return this.handleToggleOpen(item)}}
+      return <Marker key = {item.id} label={item.id.toString()}  onClick = {() =>{ return this.handleToggleOpen(item)}}
                 position = {{lat:item.latitude,lng:item.longitude}} > 
                 
                   
@@ -241,7 +243,8 @@ _handleZoomOutChanged() {/**Event Handler for clicking to zoom out-> Right click
                   city:this.state.information.city,country:this.state.information.country,
                   zip_code:this.state.information.zip_code,
                   languages:this.state.information.languages,
-                  Work_experience:this.state.information.Work_experience}}/></InfoWindow> } 
+                  Work_experience:this.state.information.Work_experience,
+                  Age:this.state.information.Age}}/></InfoWindow> } 
           
             
           </Map>
