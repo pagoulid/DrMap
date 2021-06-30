@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+DrMap React Application:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Description:
 
-## Available Scripts
+    Location visualisation of available Dr.Button doctors on a map,providing further information for each.
+  
+Info:
 
-In the project directory, you can run:
-
-### `yarn start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    -Using npm@17.0.2 for the application
+  
+    -Main files on src/ directory
+  
+    -Implemented 'google-maps-react' library for Google Maps deployment 
+      (For installation : sudo npm install  --legacy-peer-deps  --save  google-maps-react)
+      (Without --legacy-peer-deps  had some issues with npm version)
+    
+    
+  Git Control:
+  
+    Repository: https://github.com/pagoulid/map-info.git
+     -Two branches: master,test
+     
+        Main Content on master branch
+        Changes on test branch
+        Comparing changes on test with current content on master through pull request
+        On completion  of each implementation test content was merged with master content by master
+        
+ Features:
+        
+        Implementing Google maps on DrMap main page
+        Visualising markers on map due to coordinates(latitude,longitude) of each doctor location (Each marker has the id of its doctor respectively)
+        Center relocation of map according to coordinates of doctor's location with id = 1
+        On marker click , displaying further information about doctor
+        Added custom zoom in/out(Left click/Right click on map) 
+        
+                    NOTE : To display information click marker to select,then click again
+                    NOTE : It is preferable to use the custom implementation of zoom , and not the zoom buttons provided by Google API , 
+                            to avoid bugs with the display
+        
+    
+  Files:
+        
+        Map.js,Map.css : Google Maps  Deployment
+        App.js,App.css : Main page implementation
+        Info.js,Info.css : Passing information about a doctor to display them on Map
+        Tag.js,Tag.css : Animation circle implementation to info display on Map(NOTE : Styling is not fixed well)
+        doctors.json : Stored doctor's data.Needed to retrieve the data and parse it on the application
+        
+        
+        
