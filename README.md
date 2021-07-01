@@ -17,7 +17,7 @@ Info:
     
   Git Control:
   
-    Repository: https://github.com/pagoulid/map-info.git
+    Repository: https://github.com/pagoulid/DrMap.git
      -Two branches: master,test
      
         Main Content on master branch
