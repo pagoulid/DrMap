@@ -2,7 +2,7 @@ DrMap React Application:
 
 Description:
 
-    Location visualisation of available Dr.Button doctors on a map,providing further information for each.
+    Location visualisation of available  doctors on a map,providing further information for each.
   
 Info:
 
